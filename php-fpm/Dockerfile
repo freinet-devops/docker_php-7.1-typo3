@@ -16,6 +16,7 @@ RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-de
     --with-freetype-dir=/usr/include/ \
     --with-png-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure intl \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-install -j$(nproc) mysqli \
