@@ -8,7 +8,7 @@ LABEL summary="php-7.1 with extensions and external programs for typo3, ssh/sftp
 
 USER root
 
-RUN apk -u add --no-cache freetype libjpeg-turbo libpng zlib bash composer graphicsmagick
+RUN apk -u add --no-cache freetype libjpeg-turbo libpng icu-libs zlib bash composer graphicsmagick
 RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-dev \
     && docker-php-ext-configure gd \
     --with-gd \
