@@ -29,6 +29,8 @@ RUN apk add --no-cache openssh rsync mysql-client \
     && php -v >> /etc/motd \
     && echo -e '--------------------------------------------------------------------------------\n' >> /etc/motd
 
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

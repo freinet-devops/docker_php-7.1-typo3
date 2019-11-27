@@ -23,4 +23,6 @@ RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-de
     && docker-php-ext-install -j$(nproc) intl \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-dev
 
+COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
 EXPOSE 9000
