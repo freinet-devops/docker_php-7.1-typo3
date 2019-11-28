@@ -1,8 +1,7 @@
 FROM php:7.1-fpm-alpine
 # compared to
 # Install gd
-
-LABEL summary="php-7.1 with extensions and external programs for typo3" \
+LABEL summary="php-7.1 with extensions and external programs for typo3, ssh/sftp access and mysql command line client" \
       version="php7.1-fpm-alpine" \
       name="freinet/typo3-sshd" \
       maintainer="Sebastian Pitsch <pitsch@freinet.de>"
@@ -23,6 +22,18 @@ RUN apk add --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-de
     && docker-php-ext-install -j$(nproc) intl \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev zlib-dev icu-dev
 
+RUN apk add --no-cache openssh rsync mysql-client \
+    && ssh-keygen -A && echo 'StrictModes no' >> /etc/ssh/sshd_config \
+    && echo 'Welcome to Alpine' > /etc/motd \
+    && echo '--------------------------------------------------------------------------------' >> /etc/motd \
+    && php -v >> /etc/motd \
+    && echo -e '--------------------------------------------------------------------------------\n' >> /etc/motd
+
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
+COPY entrypoint-ssh.sh /entrypoint-ssh.sh
+RUN chmod +x /entrypoint-ssh.sh
+
 EXPOSE 9000
+EXPOSE 22
+
